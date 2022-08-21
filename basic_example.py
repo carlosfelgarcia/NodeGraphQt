@@ -3,7 +3,7 @@
 import os
 import signal
 
-from Qt import QtCore, QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 from NodeGraphQt import (
     NodeGraph,
@@ -136,4 +136,4 @@ if __name__ == '__main__':
     nodes_palette.set_category_label('nodes.group', 'Group Nodes')
     # nodes_palette.show()
 
-    app.exec_()
+    app.exec()

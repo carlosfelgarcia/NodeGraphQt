@@ -2,7 +2,7 @@
 import re
 from collections import OrderedDict
 
-from Qt import QtCore, QtWidgets, QtGui
+from PySide6 import QtCore, QtWidgets, QtGui
 
 from NodeGraphQt.constants import ViewerEnum, ViewerNavEnum
 
@@ -108,7 +108,7 @@ class TabSearchMenuWidget(QtWidgets.QMenu):
         search_widget.setDefaultWidget(self.line_edit)
         self.addAction(search_widget)
 
-        text_color = self.palette().text().color().getRgb()
+        text_color = [255, 255, 255]#self.palette().text().color().getRgb()
         selected_color = self.palette().highlight().color().getRgb()
         style_dict = {
             'QMenu': {
@@ -219,7 +219,7 @@ class TabSearchMenuWidget(QtWidgets.QMenu):
     def _on_search_submitted(self):
         if not self._block_submit:
             action = self.sender()
-            if type(action) is not QtWidgets.QAction:
+            if type(action) is not QtGui.QAction:
                 if len(self._searched_actions) > 0:
                     action = self._searched_actions[0]
                 else:
@@ -270,7 +270,7 @@ class TabSearchMenuWidget(QtWidgets.QMenu):
                     parent_menu.addMenu(menu)
 
         for name in node_names:
-            action = QtWidgets.QAction(name, self)
+            action = QtGui.QAction(name, self)
             action.setText(name)
             action.triggered.connect(self._on_search_submitted)
             self._actions[name] = action
