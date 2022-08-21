@@ -5,7 +5,7 @@ import json
 import os
 import re
 
-from Qt import QtCore, QtWidgets
+from PySide6 import QtCore, QtWidgets, QtGui
 
 from NodeGraphQt.base.commands import (NodeAddedCmd,
                                        NodeRemovedCmd,
@@ -130,7 +130,7 @@ class NodeGraph(QtCore.QObject):
 
         self._undo_view = None
         self._undo_stack = (
-            kwargs.get('undo_stack') or QtWidgets.QUndoStack(self))
+            kwargs.get('undo_stack') or QtGui.QUndoStack(self))
 
         self._widget = None
 
@@ -599,7 +599,7 @@ class NodeGraph(QtCore.QObject):
             :meth:`NodeGraph.end_undo()`
 
         Returns:
-            QtWidgets.QUndoStack: undo stack.
+            QtGui.QUndoStack: undo stack.
         """
         return self._undo_stack
 

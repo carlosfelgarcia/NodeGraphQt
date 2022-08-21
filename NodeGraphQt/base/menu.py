@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from distutils.version import LooseVersion
 
-from Qt import QtGui, QtCore
+from PySide6 import QtGui, QtCore
 
 from NodeGraphQt.errors import NodeMenuError
 from NodeGraphQt.widgets.actions import BaseMenu, GraphAction, NodeAction
@@ -28,6 +28,37 @@ class NodeGraphMenu(object):
     def __init__(self, graph, qmenu):
         self._graph = graph
         self._qmenu = qmenu
+        text_color = [255, 255, 255]
+        selected_color = [194, 217, 255]
+        style_dict = {
+            'QMenu': {
+                'color': 'rgb({0},{1},{2})'.format(*text_color),
+                'border': '1px solid rgba({0},{1},{2},30)'.format(*text_color),
+                'border-radius': '3px',
+            },
+            'QMenu::item': {
+                'padding': '5px 18px 2px',
+                'background-color': 'transparent',
+            },
+            'QMenu::item:selected': {
+                'color': 'rgb({0},{1},{2})'.format(*text_color),
+                'background-color': 'rgba({0},{1},{2},200)'
+                .format(*selected_color),
+            },
+            'QMenu::separator': {
+                'height': '1px',
+                'background': 'rgba({0},{1},{2}, 50)'.format(*text_color),
+                'margin': '4px 8px',
+            }
+        }
+        _menu_stylesheet = ''
+        for css_class, css in style_dict.items():
+            style = '{} {{\n'.format(css_class)
+            for elm_name, elm_val in css.items():
+                style += '  {}:{};\n'.format(elm_name, elm_val)
+            style += '}\n'
+            _menu_stylesheet += style
+        self._qmenu.setStyleSheet(_menu_stylesheet)
 
     def __repr__(self):
         return '<{}("{}") object at {}>'.format(
